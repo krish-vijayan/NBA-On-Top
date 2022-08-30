@@ -2,12 +2,15 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useOnKeyPress } from "./onKeyPress";
 import "../App.css";
+import { getMainColor, getColorsList } from "nba-color";
 
 function InputValues() {
   const [player, setPlayer] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [pic, setPic] = useState("");
+  const [headshot, setHeadshot] = useState("");
+  const [teamAbr, setTeamAbr] = useState("SAS");
+  const [logo, setLogo] = useState("");
   const [id, setId] = useState("");
   const [season, setSeason] = useState("");
   const [team, setTeam] = useState("");
@@ -27,8 +30,10 @@ function InputValues() {
 
   const getPlayerHandler = () => {
     if (!player) {
-      setTeam("Please enter a valid name");
-      setPic(null);
+      setInvalid("Please Enter a Valid Name");
+      setTeam(null);
+      setHeadshot(null);
+      setLogo(null);
       setFirstName(null);
       setLastName(null);
       setSeason(null);
@@ -47,7 +52,8 @@ function InputValues() {
               `${val.first_name.toLocaleLowerCase()} ${val.last_name.toLocaleLowerCase()}` ==
               player.toLocaleLowerCase()
             ) {
-              setTeam(val.team.full_name);
+              setTeam(`Team: ${val.team.full_name}`);
+              setTeamAbr(val.team.abbreviation.toLocaleLowerCase());
               setId(val.id);
               setNewId(7);
               setFirstName(val.first_name);
@@ -72,9 +78,12 @@ function InputValues() {
           setInvalid(null);
           setSeason(`Season: ${val.season}-${val.season + 1}`);
           setGames(`Number of Games Played: ${val.games_played} / 82  `);
-          setPts(`Points Per Game: ${val.pts}`);
-          setAsts(`Assists Per Game: ${val.ast}`);
-          setRebs(`Rebounds Per Game: ${val.reb}`);
+          setPts(`Points Per Game (PPG): ${val.pts}`);
+          setAsts(`Assists Per Game (APG): ${val.ast}`);
+          setRebs(`Rebounds Per Game (RPG): ${val.reb}`);
+          if (firstName == "LeBron") {
+            setFirstName("LeGoat");
+          }
         });
       })
       .catch((e) => console.log(e));
@@ -93,29 +102,47 @@ function InputValues() {
       })
       .catch((e) => console.log(e));
 
-    setPic(`https://cdn.nba.com/headshots/nba/latest/1040x760/${newId}.png`);
+    setHeadshot(
+      `https://cdn.nba.com/headshots/nba/latest/1040x760/${newId}.png`
+    );
+    setLogo(
+      `https://www.nba.com/.element/img/1.0/teamsites/logos/teamlogos_500x500/${teamAbr}.png`
+    );
   };
   useEffect(() => {
     getHeadshot();
   }, [newId]);
   useOnKeyPress(getPlayerHandler, "Enter");
 
+  const cardStyle = {
+    backgroundColor: `${getMainColor(teamAbr)}`,
+    borderImage: `linear-gradient(${getColorsList(teamAbr)[0]}, ${
+      getColorsList(teamAbr)[1]
+    }) 1`,
+  };
+  console.log(getColorsList(teamAbr));
   return (
     <div>
       <input onChange={handleSearch} placeholder="Enter player name"></input>
       <button onClick={getPlayerHandler}>Search</button>
-      <h1>{invalid}</h1>
-      <h1>
-        {firstName} {lastName}
-      </h1>
-      <div></div>
-      <img className="headshot" src={pic}></img>
-      <h1>{team}</h1>
-      <h2>{season}</h2>
-      <h3>{games}</h3>
-      <h3>{pts}</h3>
-      <h3>{asts}</h3>
-      <h3>{rebs}</h3>
+
+      <div className="card-container">
+        <h1>{invalid}</h1>
+        <div style={cardStyle} className="border"></div>
+        <img className="headshot" src={headshot}></img>
+        <img className="logo" src={logo}></img>
+        <div className="stat-container">
+          {/* <h1>{team}</h1> */}
+          <h1>
+            {firstName} {lastName}
+          </h1>
+          <h2>{season}</h2>
+          <h3>{games}</h3>
+          <h3>{pts}</h3>
+          <h3>{asts}</h3>
+          <h3>{rebs}</h3>
+        </div>
+      </div>
     </div>
   );
 }

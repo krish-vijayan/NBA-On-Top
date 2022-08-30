@@ -1,4 +1,69 @@
+* {
+  font-family: "Abel", sans-serif;
+}
+.border {
+  border: 10px solid;
+  position: absolute;
+  right: -15%;
+  top: 0%;
+  z-index: -1;
+  width: 25vw;
+  height: 35vw;
+}
+
 .headshot {
-  width: 400px;
-  height: 300px;
+  width: 20vw;
+  height: auto;
+}
+.logo {
+  width: 5vw;
+  height: auto;
+  position: absolute;
+  right: 85%;
+  top: 2%;
+}
+.card-container {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.stat-container {
+  text-align: center;
+  font-size: 1vw;
+}
+
+@media only screen and (max-width: 600px) {
+  .headshot {
+    width: 50vw;
+    height: auto;
+  }
+  .logo {
+    width: 15vw;
+    height: auto;
+    position: absolute;
+    right: 85%;
+    top: 2%;
+  }
+  .card-container {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .stat-container {
+    text-align: center;
+    font-size: 3vw;
+  }
+  .border {
+    width: 65vw;
+    height: 100vw;
+    border: 10px solid;
+    position: absolute;
+    right: -15%;
+    top: 0%;
+    z-index: -1;
+  }
 }
