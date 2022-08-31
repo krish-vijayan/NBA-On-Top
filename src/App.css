@@ -1,5 +1,11 @@
 * {
-  font-family: "Abel", sans-serif;
+  font-family: "Arsenal", sans-serif;
+}
+.search {
+  position: absolute;
+  top: -100px;
+  left: 10px;
+  color: black;
 }
 .border {
   border: 10px solid;
@@ -9,6 +15,11 @@
   z-index: -1;
   width: 25vw;
   height: 35vw;
+}
+
+.hide {
+  background-color: transparent;
+  border-image: null;
 }
 
 .headshot {

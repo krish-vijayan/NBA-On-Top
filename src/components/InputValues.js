@@ -2,7 +2,40 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useOnKeyPress } from "./onKeyPress";
 import "../App.css";
-import { getMainColor, getColorsList } from "nba-color";
+import { getColorsList } from "nba-color";
+import styled, { keyframes } from "styled-components";
+
+// //Styling for Card Background and Border
+const gradient = keyframes`
+ 0% {
+   background-position: 0% 50%;
+ }
+ 50% {
+   background-position: 100% 50%;
+ }
+ 100% {
+   background-position: 0% 50%;
+ }
+ `;
+
+const CardStyle = styled.div`
+  background: linear-gradient(
+    -90deg,
+    ${(props) => props.colors1},
+    ${(props) => props.colors2},
+    ${(props) => props.colors3}
+  );
+
+  border-image: linear-gradient(
+      ${(props) => props.colors1},
+      ${(props) => props.colors2},
+      ${(props) => props.colors3}
+    )
+    1;
+
+  background-size: 400% 400%;
+  animation: ${gradient} 3s linear infinite;
+`;
 
 function InputValues() {
   const [player, setPlayer] = useState("");
@@ -13,13 +46,14 @@ function InputValues() {
   const [logo, setLogo] = useState("");
   const [id, setId] = useState("");
   const [season, setSeason] = useState("");
-  const [team, setTeam] = useState("");
   const [games, setGames] = useState("");
   const [pts, setPts] = useState("");
   const [asts, setAsts] = useState("");
   const [rebs, setRebs] = useState("");
   const [invalid, setInvalid] = useState("");
   const [newId, setNewId] = useState("");
+  const [colors, setColors] = useState(getColorsList(teamAbr));
+  const [border, setBorder] = useState("");
 
   var currentTime = new Date();
   var year = currentTime.getFullYear();
@@ -27,11 +61,13 @@ function InputValues() {
   const handleSearch = (val) => {
     setPlayer(val.target.value);
   };
-
+  useEffect(() => {
+    console.log(getColorsList(teamAbr));
+  });
   const getPlayerHandler = () => {
     if (!player) {
       setInvalid("Please Enter a Valid Name");
-      setTeam(null);
+      setBorder(null);
       setHeadshot(null);
       setLogo(null);
       setFirstName(null);
@@ -42,6 +78,8 @@ function InputValues() {
       setAsts(null);
       setRebs(null);
     } else {
+      setBorder("border");
+
       //API call for player description
       axios
         .get(`https://www.balldontlie.io/api/v1/players?search=${player}`)
@@ -52,12 +90,12 @@ function InputValues() {
               `${val.first_name.toLocaleLowerCase()} ${val.last_name.toLocaleLowerCase()}` ==
               player.toLocaleLowerCase()
             ) {
-              setTeam(`Team: ${val.team.full_name}`);
               setTeamAbr(val.team.abbreviation.toLocaleLowerCase());
               setId(val.id);
               setNewId(7);
               setFirstName(val.first_name);
               setLastName(val.last_name);
+              setColors(getColorsList(teamAbr));
             }
           });
         })
@@ -81,9 +119,8 @@ function InputValues() {
           setPts(`Points Per Game (PPG): ${val.pts}`);
           setAsts(`Assists Per Game (APG): ${val.ast}`);
           setRebs(`Rebounds Per Game (RPG): ${val.reb}`);
-          if (firstName == "LeBron") {
-            setFirstName("LeGoat");
-          }
+
+          console.log(id);
         });
       })
       .catch((e) => console.log(e));
@@ -96,6 +133,7 @@ function InputValues() {
         console.log(res.data.league.standard);
         res.data.league.standard.map((val, key) => {
           if (firstName === val.firstName && lastName === val.lastName) {
+            console.log(firstName + lastName);
             setNewId(val.personId);
           }
         });
@@ -111,24 +149,29 @@ function InputValues() {
   };
   useEffect(() => {
     getHeadshot();
+    console.log(getColorsList(teamAbr));
   }, [newId]);
+
   useOnKeyPress(getPlayerHandler, "Enter");
 
-  const cardStyle = {
-    backgroundColor: `${getMainColor(teamAbr)}`,
-    borderImage: `linear-gradient(${getColorsList(teamAbr)[0]}, ${
-      getColorsList(teamAbr)[1]
-    }) 1`,
-  };
-  console.log(getColorsList(teamAbr));
   return (
     <div>
-      <input onChange={handleSearch} placeholder="Enter player name"></input>
-      <button onClick={getPlayerHandler}>Search</button>
-
       <div className="card-container">
+        <div className="search">
+          <input
+            onChange={handleSearch}
+            placeholder="Enter player name"
+          ></input>
+          <button onClick={getPlayerHandler}>Search</button>
+        </div>
+
         <h1>{invalid}</h1>
-        <div style={cardStyle} className="border"></div>
+        <CardStyle
+          colors1={colors[0]}
+          colors2={colors[1]}
+          colors3={colors[colors.length - 1]}
+          className={border}
+        ></CardStyle>
         <img className="headshot" src={headshot}></img>
         <img className="logo" src={logo}></img>
         <div className="stat-container">
