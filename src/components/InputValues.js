@@ -149,9 +149,14 @@ function InputValues() {
       })
       .catch((e) => console.log(e));
 
+    //Bug that for some reason sets some player's newId to 7....
+    if (newId === 7) {
+      setNewId("logoman");
+    }
     setHeadshot(
       `https://cdn.nba.com/headshots/nba/latest/1040x760/${newId}.png`
     );
+
     setLogo(
       `https://www.nba.com/.element/img/1.0/teamsites/logos/teamlogos_500x500/${teamAbr}.png`
     );
