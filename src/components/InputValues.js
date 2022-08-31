@@ -37,12 +37,13 @@ const CardStyle = styled.div`
   animation: ${gradient} 3s linear infinite;
 `;
 
+//Main function
 function InputValues() {
   const [player, setPlayer] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [headshot, setHeadshot] = useState("");
-  const [teamAbr, setTeamAbr] = useState("SAS");
+  const [teamAbr, setTeamAbr] = useState("");
   const [logo, setLogo] = useState("");
   const [id, setId] = useState("");
   const [season, setSeason] = useState("");
@@ -52,8 +53,10 @@ function InputValues() {
   const [rebs, setRebs] = useState("");
   const [invalid, setInvalid] = useState("");
   const [newId, setNewId] = useState("");
-  const [colors, setColors] = useState(getColorsList(teamAbr));
   const [border, setBorder] = useState("");
+  const [c1, setC1] = useState("");
+  const [c2, setC2] = useState("");
+  const [c3, setC3] = useState("");
 
   var currentTime = new Date();
   var year = currentTime.getFullYear();
@@ -61,13 +64,14 @@ function InputValues() {
   const handleSearch = (val) => {
     setPlayer(val.target.value);
   };
-  useEffect(() => {
-    console.log(getColorsList(teamAbr));
-  });
+
   const getPlayerHandler = () => {
     if (!player) {
       setInvalid("Please Enter a Valid Name");
       setBorder(null);
+      setC1(null);
+      setC2(null);
+      setC3(null);
       setHeadshot(null);
       setLogo(null);
       setFirstName(null);
@@ -78,8 +82,6 @@ function InputValues() {
       setAsts(null);
       setRebs(null);
     } else {
-      setBorder("border");
-
       //API call for player description
       axios
         .get(`https://www.balldontlie.io/api/v1/players?search=${player}`)
@@ -95,7 +97,14 @@ function InputValues() {
               setNewId(7);
               setFirstName(val.first_name);
               setLastName(val.last_name);
-              setColors(getColorsList(teamAbr));
+              setBorder("border");
+              setC1(getColorsList(val.team.abbreviation)[0]);
+              setC2(getColorsList(val.team.abbreviation)[1]);
+              setC3(
+                getColorsList(val.team.abbreviation)[
+                  getColorsList(val.team.abbreviation).length - 1
+                ]
+              );
             }
           });
         })
@@ -120,7 +129,7 @@ function InputValues() {
           setAsts(`Assists Per Game (APG): ${val.ast}`);
           setRebs(`Rebounds Per Game (RPG): ${val.reb}`);
 
-          console.log(id);
+          //console.log(id);
         });
       })
       .catch((e) => console.log(e));
@@ -130,10 +139,10 @@ function InputValues() {
     axios
       .get(`https://data.nba.net/data/10s/prod/v1/${year}/players.json`)
       .then((res) => {
-        console.log(res.data.league.standard);
+        //console.log(res.data.league.standard);
         res.data.league.standard.map((val, key) => {
           if (firstName === val.firstName && lastName === val.lastName) {
-            console.log(firstName + lastName);
+            //console.log(firstName + lastName);
             setNewId(val.personId);
           }
         });
@@ -149,9 +158,9 @@ function InputValues() {
   };
   useEffect(() => {
     getHeadshot();
-    console.log(getColorsList(teamAbr));
   }, [newId]);
 
+  //When enter is pressed, getPlayerHandler function is called
   useOnKeyPress(getPlayerHandler, "Enter");
 
   return (
@@ -162,14 +171,20 @@ function InputValues() {
             onChange={handleSearch}
             placeholder="Enter player name"
           ></input>
-          <button onClick={getPlayerHandler}>Search</button>
+          <button
+            onClick={() => {
+              getPlayerHandler();
+            }}
+          >
+            Search
+          </button>
         </div>
 
         <h1>{invalid}</h1>
         <CardStyle
-          colors1={colors[0]}
-          colors2={colors[1]}
-          colors3={colors[colors.length - 1]}
+          colors1={c1}
+          colors2={c2}
+          colors3={c3}
           className={border}
         ></CardStyle>
         <img className="headshot" src={headshot}></img>
