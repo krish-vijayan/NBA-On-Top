@@ -98,13 +98,26 @@ function InputValues() {
               setFirstName(val.first_name);
               setLastName(val.last_name);
               setBorder("border");
-              setC1(getColorsList(val.team.abbreviation)[0]);
-              setC2(getColorsList(val.team.abbreviation)[1]);
-              setC3(
-                getColorsList(val.team.abbreviation)[
-                  getColorsList(val.team.abbreviation).length - 1
-                ]
-              );
+              if (
+                getColorsList(val.team.abbreviation)[1] == "cream" ||
+                "bealeStreetBlue"
+              ) {
+                setC1(getColorsList(val.team.abbreviation)[0]);
+                setC2("white");
+                setC3(
+                  getColorsList(val.team.abbreviation)[
+                    getColorsList(val.team.abbreviation).length - 1
+                  ]
+                );
+              } else {
+                setC1(getColorsList(val.team.abbreviation)[0]);
+                setC2(getColorsList(val.team.abbreviation)[1]);
+                setC3(
+                  getColorsList(val.team.abbreviation)[
+                    getColorsList(val.team.abbreviation).length - 1
+                  ]
+                );
+              }
             }
           });
         })
@@ -162,6 +175,7 @@ function InputValues() {
     );
   };
   useEffect(() => {
+    console.log(c1, c2, c3);
     getHeadshot();
   }, [newId]);
 
