@@ -47,7 +47,7 @@ const CardStyle = styled.div`
   animation: ${gradient} 3s linear infinite;
 `;
 
-const FontStyle = styled.h1`
+const FontStyle = styled.span`
   text-transform: uppercase;
   background-image: linear-gradient(
     -225deg,
@@ -66,6 +66,7 @@ const FontStyle = styled.h1`
   -webkit-text-fill-color: transparent;
   animation: ${textclip} 2s linear infinite;
   display: inline-block;
+  text-shadow: 0px 0px 7px ${(props) => props.colors1};
 `;
 //Main function
 function InputValues() {
@@ -255,20 +256,23 @@ function InputValues() {
         </div>
 
         <h1>{invalid}</h1>
-        <CardStyle
-          colors1={c1}
-          colors2={c2}
-          colors3={c3}
-          className={border}
-        ></CardStyle>
-        <img className="headshot" src={headshot}></img>
-        <img className="logo" src={logo}></img>
+
         <div className="stat-container">
+          <CardStyle
+            colors1={c1}
+            colors2={c2}
+            colors3={c3}
+            className={border}
+          ></CardStyle>
+          <img className="headshot" src={headshot}></img>
+          <img className="logo" src={logo}></img>
+
           {/* <h1>{team}</h1> */}
-          <FontStyle colors1={c1} colors2={c2} colors3={c3} className="name">
-            {firstName} {lastName}
-          </FontStyle>
+
           <div>
+            <FontStyle colors1={c1} colors2={c2} colors3={c3} className="name">
+              {firstName} {lastName}
+            </FontStyle>
             <h2 className="stats">{season}</h2>
             <h3 className="stats">{games}</h3>
             <h3 className="stats">{pts}</h3>
@@ -277,7 +281,6 @@ function InputValues() {
           </div>
         </div>
       </div>
-      <div className="background"> </div>
     </div>
   );
 }
