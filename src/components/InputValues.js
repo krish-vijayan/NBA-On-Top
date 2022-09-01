@@ -98,12 +98,36 @@ function InputValues() {
               setFirstName(val.first_name);
               setLastName(val.last_name);
               setBorder("border");
-              if (
-                getColorsList(val.team.abbreviation)[1] == "cream" ||
-                "bealeStreetBlue"
-              ) {
+              if (getColorsList(val.team.abbreviation)[1] == "cream") {
                 setC1(getColorsList(val.team.abbreviation)[0]);
                 setC2("white");
+                setC3(
+                  getColorsList(val.team.abbreviation)[
+                    getColorsList(val.team.abbreviation).length - 1
+                  ]
+                );
+              } else if (
+                getColorsList(val.team.abbreviation)[0] == "red" &&
+                getColorsList(val.team.abbreviation)[1] == "green" &&
+                getColorsList(val.team.abbreviation)[2] == "white" &&
+                getColorsList(val.team.abbreviation)[3] == "gray"
+              ) {
+                setC1(getColorsList(val.team.abbreviation)[0]);
+                setC2("yellow");
+                setC3("white");
+              } else if (getColorsList(val.team.abbreviation)[0] == "wine") {
+                setC1("maroon");
+                setC2(getColorsList(val.team.abbreviation)[1]);
+                setC3(
+                  getColorsList(val.team.abbreviation)[
+                    getColorsList(val.team.abbreviation).length - 1
+                  ]
+                );
+              } else if (
+                getColorsList(val.team.abbreviation)[1] == "bealeStreetBlue"
+              ) {
+                setC1(getColorsList(val.team.abbreviation)[0]);
+                setC2("darkBlue");
                 setC3(
                   getColorsList(val.team.abbreviation)[
                     getColorsList(val.team.abbreviation).length - 1
@@ -175,6 +199,7 @@ function InputValues() {
     );
   };
   useEffect(() => {
+    console.log(getColorsList("atl"));
     console.log(c1, c2, c3);
     getHeadshot();
   }, [newId]);
