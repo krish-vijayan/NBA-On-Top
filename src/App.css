@@ -12,7 +12,7 @@
   position: absolute;
   right: -15%;
   top: 0%;
-  z-index: -1;
+  z-index: -2;
   width: 25vw;
   height: 35vw;
 }
@@ -25,6 +25,7 @@
 .headshot {
   width: 20vw;
   height: auto;
+  box-shadow: 10px;
 }
 .logo {
   width: 5vw;
@@ -38,6 +39,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  z-index: 2;
 }
 
 .stat-container {
@@ -45,6 +47,12 @@
   font-size: 1vw;
 }
 
+.name {
+  font-size: 2vw;
+}
+.stats {
+  text-shadow: 2px 2px 5px white;
+}
 @media only screen and (max-width: 600px) {
   .headshot {
     width: 50vw;
@@ -76,5 +84,11 @@
     right: -15%;
     top: 0%;
     z-index: -1;
+  }
+  .name {
+    font-size: 6vw;
+  }
+  .stats {
+    text-shadow: 2px 2px 5px white;
   }
 }

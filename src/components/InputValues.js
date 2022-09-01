@@ -18,25 +18,55 @@ const gradient = keyframes`
  }
  `;
 
+const textclip = keyframes`
+ to {
+  background-position: 200% center;
+}
+ `;
+//  border-image: linear-gradient(
+//   ${(props) => props.colors1},
+//   ${(props) => props.colors2},
+//   ${(props) => props.colors3}
+// )
+// 1;
+// background: linear-gradient(
+//   -90deg,
+//   ${(props) => props.colors1},
+//   ${(props) => props.colors2},
+//   ${(props) => props.colors3}
+// );
 const CardStyle = styled.div`
-  background: linear-gradient(
-    -90deg,
-    ${(props) => props.colors1},
-    ${(props) => props.colors2},
-    ${(props) => props.colors3}
-  );
-
-  border-image: linear-gradient(
-      ${(props) => props.colors1},
-      ${(props) => props.colors2},
-      ${(props) => props.colors3}
-    )
+  border-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='100' height='100' viewBox='0 0 100 100' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cstyle%3Epath%7Banimation:stroke 5s infinite linear%3B%7D%40keyframes stroke%7Bto%7Bstroke-dashoffset:776%3B%7D%7D%3C/style%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' 
+  stop-color=' ${(props) => props.colors1}' /%3E%3Cstop offset='25%25' 
+  stop-color='${(props) => props.colors2}' /%3E%3Cstop offset='50%25' 
+  stop-color='${(props) => props.colors3}' /%3E%3Cstop offset='100%25' 
+  stop-color='${(props) =>
+      props.colors1}' /%3E%3C/linearGradient%3E %3Cpath d='M1.5 1.5 l97 0l0 97l-97 0 l0 -97' stroke-linecap='square' stroke='url(%23g)' stroke-width='3' stroke-dasharray='388'/%3E %3C/svg%3E")
     1;
-
   background-size: 400% 400%;
   animation: ${gradient} 3s linear infinite;
 `;
 
+const FontStyle = styled.h1`
+  text-transform: uppercase;
+  background-image: linear-gradient(
+    -225deg,
+    ${(props) => props.colors1} 0%,
+    ${(props) => props.colors2} 29%,
+    ${(props) => props.colors3} 67%,
+    ${(props) => props.colors1} 100%
+  );
+  background-size: auto auto;
+  background-clip: border-box;
+  background-size: 200% auto;
+
+  background-clip: text;
+  text-fill-color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: ${textclip} 2s linear infinite;
+  display: inline-block;
+`;
 //Main function
 function InputValues() {
   const [player, setPlayer] = useState("");
@@ -235,16 +265,19 @@ function InputValues() {
         <img className="logo" src={logo}></img>
         <div className="stat-container">
           {/* <h1>{team}</h1> */}
-          <h1>
+          <FontStyle colors1={c1} colors2={c2} colors3={c3} className="name">
             {firstName} {lastName}
-          </h1>
-          <h2>{season}</h2>
-          <h3>{games}</h3>
-          <h3>{pts}</h3>
-          <h3>{asts}</h3>
-          <h3>{rebs}</h3>
+          </FontStyle>
+          <div>
+            <h2 className="stats">{season}</h2>
+            <h3 className="stats">{games}</h3>
+            <h3 className="stats">{pts}</h3>
+            <h3 className="stats">{asts}</h3>
+            <h3 className="stats">{rebs}</h3>
+          </div>
         </div>
       </div>
+      <div className="background"> </div>
     </div>
   );
 }
