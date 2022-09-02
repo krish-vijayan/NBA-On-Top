@@ -88,6 +88,7 @@ function InputValues() {
   const [c1, setC1] = useState("");
   const [c2, setC2] = useState("");
   const [c3, setC3] = useState("");
+  const [hide, setHide] = useState("");
 
   var currentTime = new Date();
   var year = currentTime.getFullYear();
@@ -189,16 +190,26 @@ function InputValues() {
       .then((res) => {
         console.log(res.data.data);
 
-        res.data.data.map((val, key) => {
-          setInvalid(null);
-          setSeason(`Season: ${val.season}-${val.season + 1}`);
-          setGames(`Number of Games Played: ${val.games_played} / 82  `);
-          setPts(`Points Per Game (PPG): ${val.pts}`);
-          setAsts(`Assists Per Game (APG): ${val.ast}`);
-          setRebs(`Rebounds Per Game (RPG): ${val.reb}`);
+        if (res.data.data.length == 0) {
+          setHide("hide");
+          setSeason(`RETIRED!`);
+          setGames(`Number of Games Played:  / 82  `);
+          setPts(`Points Per Game (PPG): `);
+          setAsts(`Assists Per Game (APG): `);
+          setRebs(`Rebounds Per Game (RPG): `);
+        } else {
+          setHide(null);
+          res.data.data.map((val, key) => {
+            setInvalid(null);
+            setSeason(`Season: ${val.season}-${val.season + 1}`);
+            setGames(`Number of Games Played: ${val.games_played} / 82  `);
+            setPts(`Points Per Game (PPG): ${val.pts}`);
+            setAsts(`Assists Per Game (APG): ${val.ast}`);
+            setRebs(`Rebounds Per Game (RPG): ${val.reb}`);
 
-          //console.log(id);
-        });
+            //console.log(id);
+          });
+        }
       })
       .catch((e) => console.log(e));
   }, [id]);
@@ -273,11 +284,13 @@ function InputValues() {
             <FontStyle colors1={c1} colors2={c2} colors3={c3} className="name">
               {firstName} {lastName}
             </FontStyle>
-            <h2 className="stats">{season}</h2>
-            <h3 className="stats">{games}</h3>
-            <h3 className="stats">{pts}</h3>
-            <h3 className="stats">{asts}</h3>
-            <h3 className="stats">{rebs}</h3>
+            <div className={hide}>
+              <h2 className="stats">{season}</h2>
+              <h3 className="stats">{games}</h3>
+              <h3 className="stats">{pts}</h3>
+              <h3 className="stats">{asts}</h3>
+              <h3 className="stats">{rebs}</h3>
+            </div>
           </div>
         </div>
       </div>

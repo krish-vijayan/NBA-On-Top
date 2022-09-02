@@ -18,8 +18,10 @@
 }
 
 .hide {
-  background-color: transparent;
-  border-image: null;
+  color: transparent;
+}
+.retired {
+  font-size: 1vw;
 }
 
 .headshot {
