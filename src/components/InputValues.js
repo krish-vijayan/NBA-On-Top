@@ -191,6 +191,7 @@ function InputValues() {
         console.log(res.data.data);
 
         if (res.data.data.length == 0) {
+          setInvalid(null);
           setHide("hide");
           setSeason(`RETIRED!`);
           setGames(`Number of Games Played:  / 82  `);
