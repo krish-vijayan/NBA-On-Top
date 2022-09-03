@@ -242,8 +242,7 @@ function InputValues() {
     );
   };
   useEffect(() => {
-    console.log(getColorsList("atl"));
-    console.log(c1, c2, c3);
+    // console.log(c1, c2, c3);
     getHeadshot();
   }, [newId]);
 
@@ -255,16 +254,18 @@ function InputValues() {
       <div className="card-container">
         <div className="search">
           <input
+            className="textbox"
             onChange={handleSearch}
             placeholder="Enter player name"
           ></input>
-          <button
+          {/* <button
+            className="button"
             onClick={() => {
               getPlayerHandler();
             }}
           >
-            Search
-          </button>
+            Search{" "}
+          </button> */}
         </div>
 
         <h1>{invalid}</h1>

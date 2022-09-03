@@ -3,9 +3,11 @@
 }
 .search {
   position: absolute;
-  top: -2vw;
-  left: 10px;
+  top: -4vw;
+  left: 37px;
   color: black;
+  font-size: 2vw;
+  width: 100vw;
 }
 .border {
   border: 10px solid;
@@ -33,13 +35,13 @@
   width: 5vw;
   height: auto;
   position: absolute;
-  right: 77%;
+  right: 73%;
   top: 2%;
 }
 .card-container {
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: 47%;
   transform: translate(-50%, -50%);
   z-index: 2;
 }
@@ -57,12 +59,28 @@
 .stats {
   font-family: "Alumni Sans Pinstripe";
 }
-@media only screen and (max-width: 600px) {
+
+.textbox {
+  font-size: 2vw;
+  text-align: center;
+}
+/* .button {
+  font-size: 2vw;
+} */
+.icon {
+  width: 100px;
+  height: 100px;
+}
+@media only screen and (max-width: 900px) {
   .search {
     position: absolute;
-    top: -20vw;
-    left: 10px;
+    top: -10vw;
+    left: -9px;
     color: black;
+    width: 100vw;
+  }
+  .textbox {
+    font-size: 5vw;
   }
   .headshot {
     width: 50vw;
@@ -72,13 +90,13 @@
     width: 15vw;
     height: auto;
     position: absolute;
-    right: 77%;
+    right: 73%;
     top: 2%;
   }
   .card-container {
     position: absolute;
     top: 50%;
-    left: 50%;
+    left: 53%;
     transform: translate(-50%, -50%);
   }
 
