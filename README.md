@@ -3,7 +3,7 @@
 Application that displays the entered player's current stats for the current season!
 
 Link to Application: https://nba-on-top.netlify.app/
-\*Headshot API does not work anymore :(!
+\*Player headshot and team APIs does not work anymore :(!
 
 Player Information & Stats API: https://www.balldontlie.io/
 
